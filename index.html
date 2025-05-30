@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link"><div class="logo"><span>Asterisk</span><span class="logo-asterisk">*</span></div></a>
+            <div class="nav-links">
+                <!-- Navigation will be populated from site config -->
+            </div>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="title">Dev <span class="highlight">Hideaway</span></h1>
+                <p class="subtitle">Welcome to my cozy corner of the internet where I share my journey through coding. From robust backend systems and AI experiments to game dev passion projects. Join me for late-night coding sessions, eureka moments, and honest stories about building cool stuff. Expect laid-back tutorials, casual devlogs, and practical tips for fellow developers.</p>
+                <div class="cta-buttons">
+                    <a href="#featured" class="cta-button primary">Read Articles</a>
+                    <a href="#newsletter" class="cta-button secondary">Subscribe</a>
+                </div>
+            </div>
+            <div class="hero-code">
+                <pre class="code-block">
+<code><span style="color: #00a8ff; font-weight: bold; animation-delay: 0.2s;">var</span><span style="animation-delay: 0.3s;"> api = WebApplication.Create();</span>
+
+<span style="animation-delay: 0.6s;">api.MapGet(</span><span style="color: #ff8c00; animation-delay: 0.8s;">"/hello"</span><span style="animation-delay: 1.0s;">, () => </span>
+<span style="animation-delay: 1.4s;">{ </span>
+<span style="animation-delay: 1.6s;">    var stars = </span><span style="color: #ff8c00; animation-delay: 1.8s;">"✨★✨"</span><span style="animation-delay: 2.0s;">;</span>
+<span style="animation-delay: 2.2s;">    return </span><span style="color: #ff8c00; animation-delay: 2.4s;">$"{stars} Code With Me {stars}"</span><span style="animation-delay: 2.6s;">;</span>
+<span style="animation-delay: 2.6s;">});</span>
+
+<span style="animation-delay: 2.8s;">api.Run();</span></code>
+                </pre>
+            </div>
+        </section>
+
+        <section id="featured" class="featured">
+            <h2 class="section-title">Featured <span class="highlight">Articles</span></h2>
+            <div class="articles-container">
+                <article class="article-card">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')"></div>
+                    <div class="article-content">
+                        <span class="article-category">Programming</span>
+                        <h3 class="article-title">Modern JavaScript Features Every Developer Should Know</h3>
+                        <p class="article-excerpt">Exploring the most powerful features in modern JavaScript that can transform your code. From async/await to optional chaining and beyond.</p>
+                        <a href="article-viewer.html?article=modern-javascript-features.md" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1605745341112-85968b19335b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')"></div>
+                    <div class="article-content">
+                        <span class="article-category">DevOps</span>
+                        <h3 class="article-title">Containerization: A Practical Guide to Docker and Kubernetes</h3>
+                        <p class="article-excerpt">How to effectively use containers to streamline your development and deployment processes. A hands-on approach to Docker and Kubernetes.</p>
+                        <a href="article-viewer.html?article=containerization-guide.md" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')"></div>
+                    <div class="article-content">
+                        <span class="article-category">Astronomy</span>
+                        <h3 class="article-title">The Mystery of Black Holes: Cosmic Enigmas</h3>
+                        <p class="article-excerpt">Exploring the enigmatic cosmic phenomena that continue to baffle scientists worldwide. What happens when you cross the event horizon?</p>
+                        <a href="article-viewer.html?article=black-holes-mystery.md" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+
+        <section class="topics">
+            <h2 class="section-title">Explore <span class="highlight">Topics</span></h2>
+            <div class="topics-container">
+                <div class="topic-card">
+                    <div class="topic-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Coding Adventures</h3>
+                    <p>Exploring new languages, frameworks, and coding challenges</p>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Tech Innovation</h3>
+                    <p>Breakthrough technologies shaping our digital future</p>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>System Architecture</h3>
+                    <p>Building scalable and elegant technical solutions</p>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">
+                        <i class="fas fa-meteor"></i>
+                    </div>
+                    <h3>Space Discoveries</h3>
+                    <p>Latest news and breakthroughs in astronomy and space exploration</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="newsletter" class="newsletter">
+            <div class="newsletter-content">
+                <h2>Stay <span class="highlight">Updated</span></h2>
+                <p>Subscribe to our newsletter and never miss an astronomical event or article</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="index.html" class="logo-link">
+                    <div class="logo">
+                        <span>Asterisk</span><span class="logo-asterisk">*</span>
+                    </div>
+                </a>
+                <p>A cozy corner for backend, AI, and game development.</p>
+                <div class="social-icons">
+                    <a href="#" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <!-- Categories will be populated from site config -->
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Me</h3>
+                <p><i class="fas fa-envelope"></i> hello@devhideaway.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dev Hideaway. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

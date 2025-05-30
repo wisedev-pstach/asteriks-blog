@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/articles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link"><div class="logo"><span>Asterisk</span><span class="logo-asterisk">*</span></div></a>
+            <div class="nav-links">
+                <!-- Navigation will be populated from site config -->
+            </div>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="articles-page">
+        <section class="articles-hero">
+            <h1>Explore Our <span class="highlight">Articles</span></h1>
+            <p>Discover the wonders of the universe through our collection of astronomy articles</p>
+        </section>
+
+        <section class="articles-filter-section">
+            <div class="search-container">
+                <input type="text" id="article-search" placeholder="Search articles...">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="filter-container">
+                <div class="filter-label">Filter by:</div>
+                <div class="filter-tags">
+                    <!-- Filter tags will be populated from site config -->
+                </div>
+            </div>
+        </section>
+
+        <section class="articles-grid">
+            <!-- Article cards will be dynamically loaded here -->
+        </section>
+
+        <div class="no-results" style="display: none;">
+            <h2>No articles found</h2>
+            <p>Try adjusting your search or filter criteria</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="index.html" class="logo-link">
+                    <div class="logo">
+                        <span>Asterisk</span><span class="logo-asterisk">*</span>
+                    </div>
+                </a>
+                <p>A cozy corner for backend, AI, and game development.</p>
+                <div class="social-icons">
+                    <a href="#" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <!-- Categories will be populated from site config -->
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Me</h3>
+                <p><i class="fas fa-envelope"></i> hello@devhideaway.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dev Hideaway. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/articles.js"></script>
+</body>
+</html>

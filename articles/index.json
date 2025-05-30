@@ -1,0 +1,116 @@
+{
+  "site": {
+    "title": "Asterisk*",
+    "description": "A cozy corner for backend, AI, and game development",
+    "theme": "tech",
+    "logo": {
+      "text": "Asterisk*",
+      "prefix": "Asterisk",
+      "suffix": "*"
+    },
+    "social": {
+      "twitter": "#",
+      "linkedin": "#",
+      "tiktok": "#"
+    },
+    "contact": {
+      "email": "hello@devhideaway.com"
+    }
+  },
+  "navigation": [
+    {
+      "name": "Home",
+      "url": "index.html"
+    },
+    {
+      "name": "Articles",
+      "url": "articles.html"
+    },
+    {
+      "name": "About",
+      "url": "about.html"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Backend Development",
+      "tag": "backend",
+      "description": "Server-side architecture, APIs, and databases"
+    },
+    {
+      "name": "AI & Machine Learning",
+      "tag": "ai-ml",
+      "description": "Neural networks, algorithms, and practical AI applications"
+    },
+    {
+      "name": "Game Development",
+      "tag": "gamedev",
+      "description": "Game engines, mechanics, and indie development journeys"
+    },
+    {
+      "name": "DevOps & Cloud",
+      "tag": "devops",
+      "description": "Deployment pipelines, containerization, and cloud services"
+    },
+    {
+      "name": "Astronomy",
+      "tag": "astronomy",
+      "description": "Space exploration and celestial phenomena"
+    }
+  ],
+  "articles": [
+    {
+      "id": "modern-javascript-features",
+      "filename": "modern-javascript-features.md",
+      "title": "Modern JavaScript Features Every Developer Should Know",
+      "author": "Alex Chen",
+      "date": "May 15, 2025",
+      "excerpt": "Exploring the most powerful features in modern JavaScript that can transform your code. From async/await to optional chaining and beyond.",
+      "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "tags": ["backend", "javascript", "programming"],
+      "featured": true
+    },
+    {
+      "id": "containerization-guide",
+      "filename": "containerization-guide.md",
+      "title": "Containerization: A Practical Guide to Docker and Kubernetes",
+      "author": "James Wilson",
+      "date": "May 10, 2025",
+      "excerpt": "How to effectively use containers to streamline your development and deployment processes. A hands-on approach to Docker and Kubernetes.",
+      "image": "https://images.unsplash.com/photo-1605745341112-85968b19335b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "tags": ["devops", "docker", "backend"],
+      "featured": true
+    },
+    {
+      "id": "black-holes-mystery",
+      "filename": "black-holes-mystery.md",
+      "title": "The Mystery of Black Holes: Cosmic Enigmas",
+      "author": "Dr. Eliza Chen",
+      "date": "May 5, 2025",
+      "excerpt": "Exploring the enigmatic cosmic phenomena that continue to baffle scientists worldwide. What happens when you cross the event horizon?",
+      "image": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "tags": ["astronomy", "astrophysics", "black-holes"],
+      "featured": true
+    }
+  ],
+  "hero": {
+    "title": "Dev Hideaway",
+    "subtitle": "Welcome to my cozy corner of the internet where I share my journey through coding. From robust backend systems and AI experiments to game dev passion projects.",
+    "background": "tech",
+    "cta": [
+      {
+        "text": "Read Articles",
+        "url": "#featured",
+        "type": "primary"
+      },
+      {
+        "text": "Subscribe",
+        "url": "#newsletter",
+        "type": "secondary"
+      }
+    ]
+  },
+  "footer": {
+    "copyright": "© 2025 Asterisk*. All rights reserved."
+  }
+}
