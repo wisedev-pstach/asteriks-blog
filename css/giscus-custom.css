@@ -1,0 +1,248 @@
+/* Custom Giscus Theme for Asterisk* Blog */
+
+/* Main container */
+.gsc-main {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  border: none !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Reorder components */
+.gsc-timeline {
+  order: 2 !important;
+}
+
+.gsc-header {
+  order: 1 !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(100, 255, 218, 0.1) !important;
+  margin-bottom: 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Enhanced reactions styling at the top */
+.gsc-reactions {
+  order: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 20px !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid rgba(100, 255, 218, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  background-color: rgba(22, 33, 62, 0.3) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Add a label for reactions */
+.gsc-reactions::before {
+  content: 'Reactions:' !important;
+  color: #64ffda !important;
+  margin-right: 12px !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+.gsc-reactions-count {
+  color: #ffffff !important;
+}
+
+.gsc-comments-count {
+  color: #00bcd4 !important;
+  font-weight: 600 !important;
+}
+
+/* Comments */
+.gsc-comment {
+  background-color: rgba(22, 33, 62, 0.7) !important;
+  border: 1px solid rgba(100, 255, 218, 0.1) !important;
+  border-radius: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+.gsc-comment-header {
+  background-color: rgba(15, 15, 26, 0.5) !important;
+  border-bottom: 1px solid rgba(100, 255, 218, 0.1) !important;
+  padding: 8px 16px !important;
+}
+
+.gsc-comment-author {
+  color: #00bcd4 !important;
+  font-weight: 600 !important;
+}
+
+.gsc-comment-content {
+  color: #ffffff !important;
+  padding: 16px !important;
+}
+
+.gsc-reaction {
+  background-color: rgba(22, 33, 62, 0.7) !important;
+  border: 1px solid rgba(100, 255, 218, 0.1) !important;
+  color: #ffffff !important;
+  border-radius: 30px !important;
+  padding: 6px 14px !important;
+  margin-right: 10px !important;
+  transition: all 0.3s ease !important;
+  font-size: 0.9rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.gsc-reaction:hover {
+  background-color: rgba(100, 255, 218, 0.2) !important;
+  border-color: #64ffda !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(100, 255, 218, 0.2) !important;
+}
+
+.gsc-reaction-selected {
+  background-color: rgba(100, 255, 218, 0.3) !important;
+  border-color: #64ffda !important;
+  box-shadow: 0 4px 12px rgba(100, 255, 218, 0.3) !important;
+}
+
+/* Add a subtle glow effect to selected reactions */
+.gsc-reaction-selected:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 16px rgba(100, 255, 218, 0.4) !important;
+}
+
+/* Style the emoji and count in the reaction buttons */
+.gsc-reaction-emoji {
+  font-size: 1.1rem !important;
+  line-height: 1 !important;
+}
+
+.gsc-reaction-count {
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Comment box */
+.gsc-comment-box {
+  background-color: rgba(22, 33, 62, 0.7) !important;
+  border: 1px solid rgba(100, 255, 218, 0.1) !important;
+  border-radius: 8px !important;
+  margin-bottom: 24px !important;
+}
+
+.gsc-comment-box-tabs {
+  background-color: rgba(15, 15, 26, 0.5) !important;
+  border-bottom: 1px solid rgba(100, 255, 218, 0.1) !important;
+}
+
+.gsc-comment-box-tab {
+  color: #ffffff !important;
+}
+
+.gsc-comment-box-tab.active {
+  color: #00bcd4 !important;
+  border-bottom-color: #00bcd4 !important;
+}
+
+.gsc-comment-box-textarea {
+  background-color: rgba(26, 26, 46, 0.5) !important;
+  border: 1px solid rgba(100, 255, 218, 0.1) !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+  padding: 12px !important;
+}
+
+.gsc-comment-box-textarea:focus {
+  border-color: #00bcd4 !important;
+  box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.2) !important;
+}
+
+/* Buttons */
+.gsc-comment-box-buttons {
+  margin-top: 12px !important;
+}
+
+.gsc-comment-box-buttons button {
+  background: linear-gradient(to right, #00bcd4, #ff5722) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 30px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3) !important;
+}
+
+.gsc-comment-box-buttons button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(0, 188, 212, 0.4) !important;
+}
+
+/* Sign in button */
+.gsc-comment-box-markdown-hint {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.gsc-comment-box-separator {
+  border-color: rgba(100, 255, 218, 0.1) !important;
+}
+
+.gsc-comment-box-buttons .gsc-github-button {
+  background: linear-gradient(to right, #00bcd4, #ff5722) !important;
+  color: white !important;
+  border-radius: 30px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3) !important;
+}
+
+.gsc-comment-box-buttons .gsc-github-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(0, 188, 212, 0.4) !important;
+}
+
+/* Pagination */
+.gsc-pagination {
+  margin-top: 16px !important;
+}
+
+.gsc-pagination-button {
+  background-color: rgba(22, 33, 62, 0.7) !important;
+  border: 1px solid rgba(100, 255, 218, 0.1) !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+}
+
+.gsc-pagination-button:hover {
+  background-color: rgba(100, 255, 218, 0.2) !important;
+  border-color: #64ffda !important;
+}
+
+.gsc-pagination-button.disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Loading state */
+.gsc-loading-image {
+  filter: hue-rotate(180deg) brightness(1.5) !important;
+}
+
+/* Footer */
+.gsc-footer {
+  color: rgba(255, 255, 255, 0.7) !important;
+  margin-top: 16px !important;
+}
+
+.gsc-footer a {
+  color: #00bcd4 !important;
+}
+
+.gsc-footer a:hover {
+  text-decoration: underline !important;
+}

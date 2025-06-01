@@ -1,107 +1,49 @@
-// API base URL
-const API_BASE_URL = 'http://localhost:3000/api';
+// Static site version - no API needed
 
-// Site configuration and articles data will be loaded from the API
+// Site configuration and articles data will be loaded from static files
 let siteConfig = {};
 let articlesData = [];
 let categoriesData = [];
 
-// In a real implementation, you would load the markdown files dynamically
-// For example:
-/*
-async function loadMarkdownArticles() {
-    try {
-        const response = await fetch('/articles/index.json');
-        const articleIndex = await response.json();
-        
-        const articlesData = await Promise.all(articleIndex.map(async (article) => {
-            const markdownResponse = await fetch(`/articles/${article.filename}`);
-            const markdownContent = await markdownResponse.text();
-            
-            // Parse frontmatter and markdown content
-            const { frontmatter, content } = parseMarkdown(markdownContent);
-            
-            return {
-                ...frontmatter,
-                content: content,
-                id: article.id
-            };
-        }));
-        
-        return articlesData;
-    } catch (error) {
-        console.error('Error loading markdown articles:', error);
-        return [];
-    }
-}
-
-function parseMarkdown(markdown) {
-    // Simple frontmatter parser
-    const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
-    const match = markdown.match(frontmatterRegex);
-    
-    if (!match) {
-        return { frontmatter: {}, content: markdown };
-    }
-    
-    const frontmatterStr = match[1];
-    const content = markdown.slice(match[0].length);
-    
-    // Parse frontmatter
-    const frontmatter = {};
-    frontmatterStr.split('\n').forEach(line => {
-        const [key, ...valueParts] = line.split(':');
-        if (key && valueParts.length) {
-            let value = valueParts.join(':').trim();
-            
-            // Remove quotes if present
-            if (value.startsWith('"') && value.endsWith('"')) {
-                value = value.slice(1, -1);
-            }
-            
-            // Parse arrays
-            if (value.startsWith('[') && value.endsWith(']')) {
-                value = value.slice(1, -1).split(',').map(item => 
-                    item.trim().replace(/"/g, '')
-                );
-            }
-            
-            frontmatter[key.trim()] = value;
-        }
-    });
-    
-    return { frontmatter, content };
-}
-*/
-
-// DOM Elements
+// DOM elements
 const articlesGrid = document.querySelector('.articles-grid');
 const searchInput = document.getElementById('article-search');
-const searchButton = document.getElementById('search-button');
-const filterTags = document.querySelectorAll('.filter-tag');
-const noResults = document.querySelector('.no-results');
+const filterContainer = document.querySelector('.filter-tags');
+let filterTags = [];
 
-// Current filter state
+// Current filter and search state
 let currentFilter = 'all';
-let searchQuery = '';
+let currentSearch = '';
 
-// Initialize the page
-document.addEventListener('DOMContentLoaded', async () => {
-    // Show loading state
-    articlesGrid.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading articles...</p></div>';
+// Get URL parameters for filtering
+const urlParams = new URLSearchParams(window.location.search);
+const tagParam = urlParams.get('tag');
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing articles page...');
     
-    // Check URL for tag parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const tagParam = urlParams.get('tag');
-    
-    if (tagParam) {
-        currentFilter = tagParam;
-        // Update active filter button will happen after categories are loaded
+    // Add event listener for search input
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.toLowerCase();
+            renderArticles();
+        });
     }
     
-    // Fetch site configuration from API
+    // Set initial filter if tag parameter is present
+    if (tagParam) {
+        currentFilter = tagParam;
+    }
+    
+    // Load site data and articles
+    loadSiteData();
+});
+
+// Function to load site data from static JSON file
+async function loadSiteData() {
     try {
-        const response = await fetch(`${API_BASE_URL}/site`);
+        const response = await fetch('/articles/index.json');
         if (!response.ok) {
             throw new Error(`Failed to fetch site configuration: ${response.status} ${response.statusText}`);
         }
@@ -127,27 +69,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
         
-        // Initial render
+        // Initial render of articles
         renderArticles();
     } catch (error) {
         console.error('Error fetching site data:', error);
-        articlesGrid.innerHTML = `
-            <div class="error-message">
-                <i class="fas fa-exclamation-circle"></i>
-                <h2>Could not load articles</h2>
-                <p>Please make sure the server is running. Error: ${error.message}</p>
-            </div>
-        `;
+        if (articlesGrid) {
+            articlesGrid.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h2>Could not load articles</h2>
+                    <p>Error: ${error.message}</p>
+                </div>
+            `;
+        }
     }
-    
-    // Setup event listeners
-    setupEventListeners();
-});
+}
 
 // Update site elements based on configuration
 function updateSiteElements() {
     // Update page title
-    document.title = `Articles | ${siteConfig.site.title}`;
+    document.title = siteConfig.site.title + ' - Articles';
     
     // Update logo
     const logoElements = document.querySelectorAll('.logo');
@@ -168,7 +109,8 @@ function updateSiteElements() {
             link.href = item.url;
             link.className = 'nav-link';
             link.textContent = item.name;
-            if (window.location.pathname.endsWith(item.url)) {
+            if (window.location.pathname.endsWith(item.url) || 
+                (window.location.pathname === '/' && item.url === 'index.html')) {
                 link.classList.add('active');
             }
             navLinks.appendChild(link);
@@ -180,244 +122,160 @@ function updateSiteElements() {
     if (footerBottom && siteConfig.footer) {
         footerBottom.textContent = siteConfig.footer.copyright;
     }
+    
+    // Update footer categories
+    const categoriesSection = document.querySelector('.footer-section:nth-child(3) ul');
+    if (categoriesSection && siteConfig.categories) {
+        categoriesSection.innerHTML = '';
+        siteConfig.categories.forEach(category => {
+            const li = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `articles.html?tag=${category.tag}`;
+            link.textContent = category.name;
+            li.appendChild(link);
+            categoriesSection.appendChild(li);
+        });
+    }
 }
 
-// Update filter tags based on categories
+// Function to update filter tags based on categories
 function updateFilterTags() {
-    const filterContainer = document.querySelector('.filter-tags');
     if (!filterContainer || !categoriesData) return;
     
     // Clear existing tags
     filterContainer.innerHTML = '';
     
     // Add 'All' tag
-    const allTag = document.createElement('button');
-    allTag.className = 'filter-tag active';
-    allTag.dataset.tag = 'all';
+    const allTag = document.createElement('div');
+    allTag.className = 'filter-tag ' + (currentFilter === 'all' ? 'active' : '');
     allTag.textContent = 'All';
+    allTag.dataset.tag = 'all';
+    allTag.addEventListener('click', () => {
+        setActiveFilter('all');
+    });
     filterContainer.appendChild(allTag);
     
     // Add category tags
     categoriesData.forEach(category => {
-        const tagButton = document.createElement('button');
-        tagButton.className = 'filter-tag';
-        tagButton.dataset.tag = category.tag;
-        tagButton.textContent = category.name;
-        filterContainer.appendChild(tagButton);
+        const tag = document.createElement('div');
+        tag.className = 'filter-tag ' + (currentFilter === category.tag ? 'active' : '');
+        tag.textContent = category.name;
+        tag.dataset.tag = category.tag;
+        tag.addEventListener('click', () => {
+            setActiveFilter(category.tag);
+        });
+        filterContainer.appendChild(tag);
     });
     
-    // Re-attach event listeners
-    document.querySelectorAll('.filter-tag').forEach(tag => {
-        tag.addEventListener('click', () => {
-            // Update active state
-            document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
-            tag.classList.add('active');
-            
-            // Update filter
-            currentFilter = tag.dataset.tag;
-            
-            // Update URL without reloading page
-            const url = new URL(window.location);
-            if (currentFilter === 'all') {
-                url.searchParams.delete('tag');
-            } else {
-                url.searchParams.set('tag', currentFilter);
-            }
-            window.history.pushState({}, '', url);
-            
-            // Render filtered articles
-            renderArticles();
-        });
-    });
+    // Update filterTags array
+    filterTags = Array.from(document.querySelectorAll('.filter-tag'));
 }
 
-// Setup event listeners
-function setupEventListeners() {
-    // Search functionality
-    searchButton.addEventListener('click', () => {
-        searchQuery = searchInput.value.trim().toLowerCase();
-        renderArticles();
-    });
+// Function to set active filter
+function setActiveFilter(tag) {
+    currentFilter = tag;
     
-    searchInput.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') {
-            searchQuery = searchInput.value.trim().toLowerCase();
-            renderArticles();
+    // Update URL parameter without reloading the page
+    const url = new URL(window.location.href);
+    if (tag === 'all') {
+        url.searchParams.delete('tag');
+    } else {
+        url.searchParams.set('tag', tag);
+    }
+    window.history.pushState({}, '', url);
+    
+    // Update active class on filter tags
+    filterTags.forEach(filterTag => {
+        if (filterTag.dataset.tag === tag) {
+            filterTag.classList.add('active');
+        } else {
+            filterTag.classList.remove('active');
         }
     });
     
-    // Filter functionality
-    filterTags.forEach(tag => {
-        tag.addEventListener('click', () => {
-            // Update active state
-            filterTags.forEach(t => t.classList.remove('active'));
-            tag.classList.add('active');
-            
-            // Update filter
-            currentFilter = tag.dataset.tag;
-            
-            // Update URL without reloading page
-            const url = new URL(window.location);
-            if (currentFilter === 'all') {
-                url.searchParams.delete('tag');
-            } else {
-                url.searchParams.set('tag', currentFilter);
-            }
-            window.history.pushState({}, '', url);
-            
-            // Render filtered articles
-            renderArticles();
-        });
-    });
+    // Re-render articles with new filter
+    renderArticles();
 }
 
-// Filter articles based on current filter and search query
-function filterArticles() {
-    return articlesData.filter(article => {
-        // Filter by tag
-        const passesTagFilter = currentFilter === 'all' || article.tags.includes(currentFilter);
-        
-        // Filter by search query
-        const passesSearchFilter = searchQuery === '' || 
-            article.title.toLowerCase().includes(searchQuery) || 
-            article.excerpt.toLowerCase().includes(searchQuery) ||
-            (article.author && article.author.toLowerCase().includes(searchQuery)) ||
-            article.tags.some(tag => tag.toLowerCase().includes(searchQuery));
-        
-        return passesTagFilter && passesSearchFilter;
-    });
-}
-
-// Render articles to the grid
+// Function to render articles based on current filter and search
 function renderArticles() {
-    const filteredArticles = filterArticles();
+    if (!articlesGrid || !articlesData) return;
     
-    // Clear the grid
-    articlesGrid.innerHTML = '';
+    // Filter articles based on current filter and search
+    const filteredArticles = articlesData.filter(article => {
+        const matchesFilter = currentFilter === 'all' || article.tags.includes(currentFilter);
+        const matchesSearch = currentSearch === '' || 
+            article.title.toLowerCase().includes(currentSearch) || 
+            article.excerpt.toLowerCase().includes(currentSearch);
+        
+        return matchesFilter && matchesSearch;
+    });
     
     // Show/hide no results message
-    if (filteredArticles.length === 0) {
-        noResults.style.display = 'block';
-    } else {
-        noResults.style.display = 'none';
+    const noResults = document.querySelector('.no-results');
+    if (noResults) {
+        if (filteredArticles.length === 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
     }
     
-    // Render each article
-    filteredArticles.forEach((article, index) => {
-        const articleCard = document.createElement('article');
-        articleCard.className = 'article-card';
-        articleCard.style.animationDelay = `${index * 0.1}s`;
-        
-        // Create a link to the article viewer page
-        const articleLink = article.filename ? `article-viewer.html?article=${article.filename}` : '#';
-        
-        articleCard.innerHTML = `
-            <div class="article-image" style="background-image: url('${article.image}')"></div>
-            <div class="article-content">
-                <div class="article-meta">
-                    <span class="article-date">${article.date}</span>
-                    ${article.author ? `<span class="article-author">by ${article.author}</span>` : ''}
-                </div>
-                <div class="article-tags">
-                    ${article.tags.map(tag => `<span class="article-tag">${formatTag(tag)}</span>`).join('')}
-                </div>
-                <h3 class="article-title">${article.title}</h3>
-                <p class="article-excerpt">${article.excerpt}</p>
-                <a href="${articleLink}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-            </div>
-        `;
-        
-        // Add click event to the entire card
-        articleCard.addEventListener('click', (e) => {
-            // Only navigate if the click wasn't on a tag or the read more link
-            if (!e.target.closest('.article-tag') && !e.target.closest('.read-more')) {
-                window.location.href = articleLink;
-            }
-        });
-        
+    // Clear existing articles
+    articlesGrid.innerHTML = '';
+    
+    // Render filtered articles
+    filteredArticles.forEach(article => {
+        const articleCard = createArticleCard(article);
         articlesGrid.appendChild(articleCard);
     });
+    
+    // Add animation to article cards
+    setTimeout(() => {
+        const articleCards = document.querySelectorAll('.article-card');
+        articleCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('visible');
+            }, index * 100); // Stagger the animations
+        });
+    }, 100);
 }
 
-// Format tag for display (capitalize, replace hyphens with spaces)
-function formatTag(tag) {
-    return tag
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-}
-
-// Parse markdown files to extract metadata
-// This is a simplified version - in a real app, you would implement proper markdown parsing
-async function parseMarkdownFile(filename) {
-    try {
-        const response = await fetch(`articles/${filename}`);
-        const markdown = await response.text();
-        
-        // Extract image
-        const imageMatch = markdown.match(/!\[.*?\]\((.*?)\)/);
-        const image = imageMatch ? imageMatch[1] : '';
-        
-        // Extract title
-        const titleMatch = markdown.match(/# (.+)/);
-        const title = titleMatch ? titleMatch[1] : 'Untitled';
-        
-        // Extract author
-        const authorMatch = markdown.match(/\*\*Author: (.+?)\*\*/);
-        const author = authorMatch ? authorMatch[1] : 'Unknown';
-        
-        // Extract description
-        const descMatch = markdown.match(/\*(.+?)\*/);
-        const excerpt = descMatch ? descMatch[1] : '';
-        
-        // Extract date
-        const dateMatch = markdown.match(/\*\*Date: (.+?)\*\*/);
-        const date = dateMatch ? dateMatch[1] : '';
-        
-        // Extract tags
-        const tagsMatch = markdown.match(/\*\*Tags: (.+?)\*\*/);
-        const tagsStr = tagsMatch ? tagsMatch[1] : '';
-        const tags = tagsStr.split(',').map(tag => tag.trim());
-        
-        return {
-            title,
-            excerpt,
-            image,
-            date,
-            author,
-            tags,
-            filename
-        };
-    } catch (error) {
-        console.error(`Error parsing markdown file ${filename}:`, error);
-        return null;
-    }
-}
-
-// Add some visual effects
-document.addEventListener('DOMContentLoaded', () => {
-    // Animate search input on focus
-    searchInput.addEventListener('focus', () => {
-        searchInput.style.transition = 'all 0.3s ease';
-        searchInput.style.boxShadow = '0 0 15px rgba(108, 99, 255, 0.5)';
+// Function to create an article card
+function createArticleCard(article) {
+    const card = document.createElement('div');
+    card.className = 'article-card';
+    
+    // Format date
+    const date = article.date ? new Date(article.date) : new Date();
+    const formattedDate = date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
     });
     
-    searchInput.addEventListener('blur', () => {
-        searchInput.style.boxShadow = 'none';
+    // Create card content
+    card.innerHTML = `
+        <div class="article-image">
+            <img src="${article.image || 'images/placeholder.jpg'}" alt="${article.title}">
+        </div>
+        <div class="article-content">
+            <div class="article-tags">
+                ${article.tags.map(tag => `<span class="article-tag">${tag}</span>`).join('')}
+            </div>
+            <h3 class="article-title">${article.title}</h3>
+            <p class="article-excerpt">${article.excerpt}</p>
+            <div class="article-meta">
+                <span class="article-date">${formattedDate}</span>
+                <span class="article-author">By ${article.author}</span>
+            </div>
+        </div>
+    `;
+    
+    // Add click event to open the article
+    card.addEventListener('click', () => {
+        window.location.href = `article.html?id=${article.id}`;
     });
     
-    // Animate filter tags on hover
-    filterTags.forEach(tag => {
-        tag.addEventListener('mouseenter', () => {
-            if (!tag.classList.contains('active')) {
-                tag.style.transform = 'translateY(-3px)';
-            }
-        });
-        
-        tag.addEventListener('mouseleave', () => {
-            if (!tag.classList.contains('active')) {
-                tag.style.transform = 'translateY(0)';
-            }
-        });
-    });
-});
+    return card;
+}

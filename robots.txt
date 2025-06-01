@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Sitemap: https://yourdomain.com/sitemap.xml
+
+# Allow all crawlers to access all content
+User-agent: *
+Disallow:
+
+# Prevent crawling of admin or private areas if they exist
+User-agent: *
+Disallow: /admin/
+Disallow: /private/

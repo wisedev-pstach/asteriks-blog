@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "route": "/articles.json",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "route": "/articles/*.md",
+      "headers": {
+        "Content-Type": "text/markdown"
+      }
+    },
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*", "/css/*", "/js/*", "/*.ico", "/*.json", "/*.md"]
+  },
+  "mimeTypes": {
+    ".md": "text/markdown"
+  }
+}

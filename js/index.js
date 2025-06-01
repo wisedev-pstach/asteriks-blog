@@ -1,7 +1,6 @@
 // Index page JavaScript
 
-// API base URL
-const API_BASE_URL = 'http://localhost:3000/api';
+// Static site version - no API needed
 
 // Site configuration
 let siteConfig = {};
@@ -10,8 +9,8 @@ let siteConfig = {};
 async function loadSiteData() {
     try {
         console.log('Fetching site data...');
-        // Fetch site configuration
-        const response = await fetch(`${API_BASE_URL}/site`);
+        // Fetch site configuration directly from the JSON file
+        const response = await fetch('/articles/index.json');
         if (!response.ok) {
             throw new Error(`Failed to fetch site configuration: ${response.status} ${response.statusText}`);
         }
@@ -109,7 +108,6 @@ function updateHeroSection() {
     
     const heroTitle = document.querySelector('.hero-content .title');
     const heroSubtitle = document.querySelector('.hero-content .subtitle');
-    const ctaButtons = document.querySelector('.hero-content .cta-buttons');
     
     // Commented out to preserve manual HTML title and subtitle
     // if (heroTitle) {
@@ -120,16 +118,9 @@ function updateHeroSection() {
     //     heroSubtitle.textContent = siteConfig.hero.subtitle;
     // }
     
-    if (ctaButtons && siteConfig.hero.cta) {
-        ctaButtons.innerHTML = '';
-        siteConfig.hero.cta.forEach(button => {
-            const link = document.createElement('a');
-            link.href = button.url;
-            link.className = `cta-button ${button.type}`;
-            link.textContent = button.text;
-            ctaButtons.appendChild(link);
-        });
-    }
+    // IMPORTANT: We're no longer dynamically replacing the CTA buttons
+    // This allows us to keep our custom buttons defined in the HTML
+    // including the GitHub link button
 }
 
 // Update featured articles section
@@ -146,36 +137,72 @@ function updateFeaturedArticles() {
         return;
     }
     
-    // Get featured articles
+    // Get featured articles first
     const featuredArticles = siteConfig.articles.filter(article => article.featured);
     console.log('Featured articles:', featuredArticles);
+    
+    // If we don't have 3 featured articles, add some non-featured ones
+    let articlesToShow = [...featuredArticles];
+    
+    if (articlesToShow.length < 3) {
+        // Get non-featured articles
+        const nonFeaturedArticles = siteConfig.articles.filter(article => !article.featured);
+        
+        // Add enough non-featured articles to make 3 total
+        const neededArticles = 3 - articlesToShow.length;
+        articlesToShow = [...articlesToShow, ...nonFeaturedArticles.slice(0, neededArticles)];
+    } else {
+        // If we have more than 3 featured articles, just take the first 3
+        articlesToShow = articlesToShow.slice(0, 3);
+    }
+    
+    console.log('Articles to show:', articlesToShow);
     
     // Clear container
     articlesContainer.innerHTML = '';
     
-    if (featuredArticles.length === 0) {
-        articlesContainer.innerHTML = '<p>No featured articles found</p>';
+    if (articlesToShow.length === 0) {
+        articlesContainer.innerHTML = '<p>No articles found</p>';
         return;
     }
     
-    // Add featured articles
-    featuredArticles.forEach(article => {
+    // Add articles to the featured section
+    articlesToShow.forEach(article => {
         console.log('Adding article:', article.title);
         const articleCard = document.createElement('article');
         articleCard.className = 'article-card';
         
         articleCard.innerHTML = `
-            <div class="article-image" style="background-image: url('${article.image}')"></div>
+            <div class="article-image">
+                <img src="${article.image || 'images/placeholder.jpg'}" alt="${article.title}">
+            </div>
             <div class="article-content">
-                <span class="article-category">${getCategoryName(article.tags[0])}</span>
+                <div class="article-tags">
+                    ${article.tags.map(tag => `<span class="article-tag">${tag}</span>`).join('')}
+                </div>
                 <h3 class="article-title">${article.title}</h3>
                 <p class="article-excerpt">${article.excerpt}</p>
-                <a href="article-viewer.html?article=${article.filename}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                <div class="article-meta">
+                    <span class="article-date">${formatDate(article.date)}</span>
+                    <span class="article-author">By ${article.author}</span>
+                </div>
             </div>
         `;
         
+        // Add click event to navigate to the article page
+        articleCard.addEventListener('click', () => {
+            window.location.href = `article.html?id=${article.id}`;
+        });
+        
         articlesContainer.appendChild(articleCard);
     });
+}
+
+// Format date to a readable format
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', options);
 }
 
 // Get category name from tag

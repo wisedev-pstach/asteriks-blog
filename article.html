@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dynamic SEO Meta Tags - Will be populated by JavaScript -->
+    <meta name="description" content="Exploring the wonders of astronomy and space science">
+    <meta name="keywords" content="astronomy, space, cosmos, stars, planets, galaxies">
+    <meta name="author" content="Asterisk* Blog">
+    <!-- Open Graph Protocol for better social media sharing -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Loading...">
+    <meta property="og:description" content="Exploring the wonders of astronomy and space science">
+    <meta property="og:image" content="/images/default-share-image.jpg">
+    <meta property="og:url" content="">
+    <meta property="og:site_name" content="Asterisk* Blog">
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Loading...">
+    <meta name="twitter:description" content="Exploring the wonders of astronomy and space science">
+    <meta name="twitter:image" content="/images/default-share-image.jpg">
+    <!-- Canonical URL to prevent duplicate content issues -->
+    <link rel="canonical" href="">
     <title>Loading...</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/articles.css">
+    <link rel="stylesheet" href="css/article.css">
+    <link rel="stylesheet" href="css/giscus-custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,33 +48,38 @@
         </nav>
     </header>
 
-    <main class="articles-page">
-        <section class="articles-hero">
-            <h1>Explore <span class="highlight">Articles</span></h1>
-            <p>Dive into backend development, programming languages, and tech insights</p>
-        </section>
-
-        <section class="articles-filter-section">
-            <div class="search-container">
-                <input type="text" id="article-search" placeholder="Search articles...">
-                <button id="search-button"><i class="fas fa-search"></i></button>
+    <main class="article-page">
+        <div class="article-container">
+            
+            
+            <div class="article-featured-image">
+                <img src="" alt="Article featured image">
             </div>
             
-            <div class="filter-container">
-                <div class="filter-label">Filter by:</div>
-                <div class="filter-tags">
-                    <!-- Filter tags will be populated from site config -->
+            <div class="article-content">
+                <!-- Article content will be loaded here -->
+                <div class="article-loading">
+                    <div class="spinner"></div>
+                    <p>Loading article content...</p>
                 </div>
             </div>
-        </section>
-
-        <section class="articles-grid">
-            <!-- Article cards will be dynamically loaded here -->
-        </section>
-
-        <div class="no-results" style="display: none;">
-            <h2>No articles found</h2>
-            <p>Try adjusting your search or filter criteria</p>
+            
+            <!-- Comments section will be inserted here by comments.js -->
+        </div>
+        
+        <div class="article-navigation">
+            <div class="prev-next-container">
+                <a href="#" class="prev-article" style="display: none;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Previous Article</span>
+                    <strong class="prev-title"></strong>
+                </a>
+                <a href="#" class="next-article" style="display: none;">
+                    <span>Next Article</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <strong class="next-title"></strong>
+                </a>
+            </div>
         </div>
     </main>
 
@@ -99,6 +123,9 @@
     </footer>
 
     <script src="js/script.js"></script>
-    <script src="js/articles.js"></script>
+    <script src="js/article.js"></script>
+    <script src="js/comments.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>

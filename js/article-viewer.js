@@ -1,7 +1,6 @@
 // Article Viewer JavaScript
 
-// API base URL
-const API_BASE_URL = 'http://localhost:3000/api';
+// Static site version - no API needed
 
 // Site configuration
 let siteConfig = {};
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Load site configuration first
     try {
-        const response = await fetch(`${API_BASE_URL}/site`);
+        const response = await fetch('/articles/index.json');
         if (!response.ok) {
             throw new Error(`Failed to fetch site configuration: ${response.status} ${response.statusText}`);
         }
@@ -70,10 +69,11 @@ function updateSiteElements() {
     }
 }
 
-// Load the article content from the API
+// Load the article content from static files
 async function loadArticle(filename) {
     try {
-        const response = await fetch(`${API_BASE_URL}/articles/${filename}`);
+        // For static site, we fetch the markdown file directly
+        const response = await fetch(`/articles/${filename}.md`);
         
         if (!response.ok) {
             throw new Error(`Failed to load article: ${response.status} ${response.statusText}`);
@@ -85,11 +85,11 @@ async function loadArticle(filename) {
         // Update page title with article title
         const titleMatch = markdown.match(/# (.+)/);
         if (titleMatch && titleMatch[1]) {
-            document.title = `${titleMatch[1]} | Cosmic Insights`;
+            document.title = `${titleMatch[1]} | Dev Hideaway`;
         }
     } catch (error) {
         console.error('Error loading article:', error);
-        showError('Could not load the article. Please make sure the server is running.');
+        showError('Could not load the article. The requested article may not exist.');
     }
 }
 

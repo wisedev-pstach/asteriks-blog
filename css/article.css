@@ -1,0 +1,404 @@
+/* Article page specific styles */
+
+.article-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.article-container {
+    background: rgba(10, 10, 20, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    margin-bottom: 3rem;
+}
+
+.article-header {
+    padding: 2rem 2rem 1rem;
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    color: var(--primary-color);
+}
+
+.article-meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.article-author {
+    margin-right: 1.5rem;
+}
+
+.author-name {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.article-tag {
+    background: rgba(var(--accent-rgb), 0.2);
+    color: var(--accent-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.article-tag:hover {
+    background: rgba(var(--accent-rgb), 0.3);
+}
+
+.article-featured-image {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.article-featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.article-featured-image img:hover {
+    transform: scale(1.02);
+}
+
+.article-content {
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    padding-bottom: 3rem;
+}
+
+.article-content h1, 
+.article-content h2, 
+.article-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.article-content p {
+    margin-bottom: 1.5rem;
+}
+
+.article-content a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.article-content a:hover {
+    color: var(--primary-color);
+}
+
+.article-content blockquote {
+    border-left: 4px solid var(--accent-color);
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    color: var(--text-light);
+}
+
+.article-content code {
+    background: rgba(30, 30, 50, 0.7);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.article-content pre {
+    background: rgba(30, 30, 50, 0.7);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.article-content pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.article-content ul, 
+.article-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.article-content li {
+    margin-bottom: 0.5rem;
+}
+
+.article-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 50%;
+    border-top-color: var(--accent-color);
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.article-navigation {
+    margin-bottom: 3rem;
+}
+
+.prev-next-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.prev-article, .next-article {
+    display: flex;
+    align-items: center;
+    background: rgba(10, 10, 20, 0.7);
+    backdrop-filter: blur(10px);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 48%;
+}
+
+.prev-article {
+    justify-content: flex-start;
+}
+
+.next-article {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.prev-article:hover, .next-article:hover {
+    background: rgba(20, 20, 40, 0.8);
+    transform: translateY(-3px);
+}
+
+.prev-article i, .next-article i {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+.prev-article i {
+    margin-right: 1rem;
+}
+
+.next-article i {
+    margin-left: 1rem;
+}
+
+.prev-article span, .next-article span {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+}
+
+.prev-title, .next-title {
+    font-weight: 600;
+    color: var(--primary-color);
+    display: block;
+}
+
+.related-articles {
+    margin-bottom: 3rem;
+}
+
+.related-articles h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.related-articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Reactions section styles */
+.reactions-section {
+    background: rgba(15, 15, 30, 0.7);
+    padding: 1.5rem 2rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(100, 255, 218, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.reactions-heading {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.reactions-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.reaction-button {
+    background-color: rgba(22, 33, 62, 0.7);
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    color: #ffffff;
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reaction-button:hover {
+    background-color: rgba(100, 255, 218, 0.2);
+    border-color: #64ffda;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(100, 255, 218, 0.2);
+}
+
+.reaction-button.selected {
+    background-color: rgba(100, 255, 218, 0.2);
+    border-color: #64ffda;
+}
+
+.reaction-emoji {
+    font-size: 1.2rem;
+    margin-right: 8px;
+}
+
+.reaction-count {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Comments section styles */
+.comments-section {
+    background: rgba(15, 15, 30, 0.7);
+    border-radius: 0 0 12px 12px;
+    padding: 2rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.comments-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.8rem;
+}
+
+.comments-description {
+    color: var(--light-text);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.giscus-container {
+    width: 100%;
+}
+
+/* Make sure the Giscus frame takes the full width */
+.giscus-frame {
+    width: 100%;
+}
+
+/* Custom Giscus theme to match site aesthetic */
+:root {
+    --giscus-primary-color: var(--primary-color);
+    --giscus-secondary-color: var(--secondary-color);
+    --giscus-accent-color: var(--accent-color);
+}
+
+/* Override Giscus styles with custom CSS variables */
+.giscus, .giscus-frame {
+    color-scheme: dark;
+}
+
+/* Style the main container */
+.giscus-container .giscus {
+    max-width: 100%;
+    margin: 0;
+}
+
+/* Custom styles that will be injected into the Giscus iframe */
+.giscus-frame {
+    background-color: transparent !important;
+}
+
+/* Add custom theme via data attribute */
+.giscus-container script {
+    display: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 2rem;
+    }
+    
+    .article-featured-image {
+        height: 250px;
+    }
+    
+    .article-content {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .prev-next-container {
+        flex-direction: column;
+    }
+    
+    .prev-article, .next-article {
+        max-width: 100%;
+    }
+    
+    .related-articles-grid {
+        grid-template-columns: 1fr;
+    }
+}

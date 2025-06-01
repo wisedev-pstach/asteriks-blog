@@ -598,7 +598,7 @@ color: var(--accent-color);
 
 .articles-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
 
@@ -624,9 +624,16 @@ color: var(--accent-color);
 
 .article-image {
     height: 200px;
-    background-size: cover;
-    background-position: center;
     position: relative;
+    overflow: hidden;
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
 }
 
 .article-image::before {
@@ -637,6 +644,12 @@ color: var(--accent-color);
     width: 100%;
     height: 100%;
     background: linear-gradient(to bottom, transparent 50%, rgba(10, 10, 26, 0.8));
+    z-index: 1;
+    pointer-events: none;
+}
+
+.article-card:hover .article-image img {
+    transform: scale(1.05);
 }
 
 .article-content {

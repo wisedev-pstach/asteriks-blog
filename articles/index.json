@@ -33,64 +33,64 @@
   ],
   "categories": [
     {
+      "name": "C# Programming",
+      "tag": "csharp",
+      "description": "Everything related to C# development, frameworks, and best practices"
+    },
+    {
+      "name": "Performance Testing",
+      "tag": "performance",
+      "description": "Load testing, benchmarking, and optimizing application performance"
+    },
+    {
+      "name": "Physics & Space",
+      "tag": "physics",
+      "description": "Theoretical physics, space-time concepts, and cosmic phenomena"
+    },
+    {
       "name": "Backend Development",
       "tag": "backend",
       "description": "Server-side architecture, APIs, and databases"
     },
     {
-      "name": "AI & Machine Learning",
-      "tag": "ai-ml",
-      "description": "Neural networks, algorithms, and practical AI applications"
-    },
-    {
-      "name": "Game Development",
-      "tag": "gamedev",
-      "description": "Game engines, mechanics, and indie development journeys"
-    },
-    {
-      "name": "DevOps & Cloud",
-      "tag": "devops",
-      "description": "Deployment pipelines, containerization, and cloud services"
-    },
-    {
-      "name": "Astronomy",
-      "tag": "astronomy",
-      "description": "Space exploration and celestial phenomena"
+      "name": "Programming",
+      "tag": "programming",
+      "description": "General programming concepts, languages, and techniques"
     }
   ],
   "articles": [
     {
-      "id": "modern-javascript-features",
-      "filename": "modern-javascript-features.md",
-      "title": "Modern JavaScript Features Every Developer Should Know",
-      "author": "Alex Chen",
-      "date": "May 15, 2025",
-      "excerpt": "Exploring the most powerful features in modern JavaScript that can transform your code. From async/await to optional chaining and beyond.",
-      "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      "tags": ["backend", "javascript", "programming"],
+      "id": "nbomber-api-testing",
+      "filename": "nbomber-api-testing.md",
+      "title": "NBomber, and Why Your API Exploding is Not Bad Juju",
+      "author": "WiseDev",
+      "date": "May 31, 2025",
+      "excerpt": "Finding out your API collapses under load in production is like discovering your parachute has a hole... while skydiving. NBomber helps you discover these issues while you're still on the ground.",
+      "image": "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "tags": ["programming", "csharp", "performance"],
       "featured": true
     },
     {
-      "id": "containerization-guide",
-      "filename": "containerization-guide.md",
-      "title": "Containerization: A Practical Guide to Docker and Kubernetes",
-      "author": "James Wilson",
-      "date": "May 10, 2025",
-      "excerpt": "How to effectively use containers to streamline your development and deployment processes. A hands-on approach to Docker and Kubernetes.",
-      "image": "https://images.unsplash.com/photo-1605745341112-85968b19335b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      "tags": ["devops", "docker", "backend"],
-      "featured": true
+      "id": "when-we-are",
+      "filename": "when-we-are.md",
+      "title": "When We Are?",
+      "author": "WiseDev",
+      "date": "May 31, 2025",
+      "excerpt": "The question 'when are we?' might sound grammatically suspicious, but it's actually one of the deepest mysteries in modern physics.",
+      "image": "https://images.unsplash.com/photo-1534841090574-cba2d662b62e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "tags": ["physics", "space-time"],
+      "featured": false
     },
     {
-      "id": "black-holes-mystery",
-      "filename": "black-holes-mystery.md",
-      "title": "The Mystery of Black Holes: Cosmic Enigmas",
-      "author": "Dr. Eliza Chen",
-      "date": "May 5, 2025",
-      "excerpt": "Exploring the enigmatic cosmic phenomena that continue to baffle scientists worldwide. What happens when you cross the event horizon?",
-      "image": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      "tags": ["astronomy", "astrophysics", "black-holes"],
-      "featured": true
+      "id": "why-csharp",
+      "filename": "why-csharp.md",
+      "title": "Why C#?",
+      "author": "WiseDev",
+      "date": "May 31, 2025",
+      "excerpt": "After trying many programming languages, C# has become my true coding home. It's blazingly fast, feature-rich, and has a surprisingly cozy learning curve.",
+      "image": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "tags": ["csharp", "programming"],
+      "featured": false
     }
   ],
   "hero": {
@@ -111,6 +111,6 @@
     ]
   },
   "footer": {
-    "copyright": "© 2025 Asterisk*. All rights reserved."
+    "copyright": " 2025 Asterisk*. All rights reserved."
   }
 }

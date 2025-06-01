@@ -150,23 +150,7 @@
     -webkit-text-fill-color: transparent;
 }
 
-.article-image {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    transition: transform 0.5s ease;
-}
-
-.article-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent 50%, rgba(10, 10, 26, 0.8));
-}
+/* Article image styles moved to style.css */
 
 .article-content {
     padding: 25px;
