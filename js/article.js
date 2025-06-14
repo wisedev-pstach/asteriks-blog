@@ -313,24 +313,33 @@ function updateSEOMetaTags(article) {
     const articleUrl = `${baseUrl}/article.html?id=${article.id}`;
     
     // Create a clean excerpt from the article description
-    const description = article.description || `Read about ${article.title} in our astronomy blog.`;
+    const description = article.description || article.excerpt || `Read about ${article.title} on Asterisk Dev.`;
     const cleanDescription = description.replace(/\s+/g, ' ').trim();
+    
+    // Create keywords from tags with additional relevant terms
+    const keywordBase = article.tags.join(', ');
+    const keywordSuffix = article.tags.includes('nbomber') ? ', tutorial, load testing, api testing, performance' : '';
+    const keywords = keywordBase + keywordSuffix;
     
     // Update basic meta tags
     document.querySelector('meta[name="description"]').setAttribute('content', cleanDescription);
-    document.querySelector('meta[name="keywords"]').setAttribute('content', `astronomy, ${article.tags.join(', ')}, space science`);
+    document.querySelector('meta[name="keywords"]').setAttribute('content', keywords);
     document.querySelector('meta[name="author"]').setAttribute('content', article.author);
+    
+    // Update document title for better SEO
+    document.title = `${article.title} | Asterisk Dev`;
     
     // Update Open Graph meta tags
     document.querySelector('meta[property="og:title"]').setAttribute('content', article.title);
     document.querySelector('meta[property="og:description"]').setAttribute('content', cleanDescription);
     document.querySelector('meta[property="og:url"]').setAttribute('content', articleUrl);
-    document.querySelector('meta[property="og:image"]').setAttribute('content', `${baseUrl}${article.image}`);
+    document.querySelector('meta[property="og:image"]').setAttribute('content', article.image.startsWith('http') ? article.image : `${baseUrl}${article.image}`);
+    document.querySelector('meta[property="og:site_name"]').setAttribute('content', 'Asterisk Dev');
     
     // Update Twitter Card meta tags
     document.querySelector('meta[name="twitter:title"]').setAttribute('content', article.title);
     document.querySelector('meta[name="twitter:description"]').setAttribute('content', cleanDescription);
-    document.querySelector('meta[name="twitter:image"]').setAttribute('content', `${baseUrl}${article.image}`);
+    document.querySelector('meta[name="twitter:image"]').setAttribute('content', article.image.startsWith('http') ? article.image : `${baseUrl}${article.image}`);
     
     // Update canonical URL
     document.querySelector('link[rel="canonical"]').setAttribute('href', articleUrl);

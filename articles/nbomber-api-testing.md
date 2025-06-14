@@ -1,10 +1,10 @@
 ![NBomber API Testing](https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80)
 
-# NBomber, and Why Your API Exploding is Not Bad Juju
+# NBomber Tutorial: Complete Guide to API Load Testing in C#
 
-**Author:** WiseDev  
+**Author:** Asterisk Dev  
 **Date:** May 31, 2025  
-**Tags:** programming, csharp, performance  
+**Tags:** programming, csharp, performance, nbomber, tutorial, load-testing, api-testing  
 
 Finding out your API collapses under load in production is like discovering your parachute has a hole... while skydiving. NBomber helps you discover these issues while you're still on the ground.
 

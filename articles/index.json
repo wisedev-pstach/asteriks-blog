@@ -62,13 +62,14 @@
     {
       "id": "nbomber-api-testing",
       "filename": "nbomber-api-testing.md",
-      "title": "NBomber, and Why Your API Exploding is Not Bad Juju",
-      "author": "WiseDev",
+      "title": "NBomber Tutorial: Complete Guide to API Load Testing in C#",
+      "author": "Asterisk Dev",
       "date": "May 31, 2025",
       "excerpt": "Finding out your API collapses under load in production is like discovering your parachute has a hole... while skydiving. NBomber helps you discover these issues while you're still on the ground.",
       "image": "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      "tags": ["programming", "csharp", "performance"],
-      "featured": true
+      "tags": ["programming", "csharp", "performance", "nbomber", "tutorial", "load-testing", "api-testing"],
+      "featured": true,
+      "description": "A complete step-by-step NBomber tutorial for load testing APIs in C#. Learn how to set up NBomber from scratch and test your API performance with real code examples."
     },
     {
       "id": "when-we-are",
