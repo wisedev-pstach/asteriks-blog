@@ -33,7 +33,7 @@ By the end of this article, you'll have:
 3. The knowledge to identify and fix common performance bottlenecks
 4. Beautiful HTML reports showing your API's performance characteristics
 
-All the code is available in [this GitHub repository](https://github.com/wisedev/nbomber-tutorial) if you want to skip ahead or check your work.
+All the code is available in [this GitHub repository](https://github.com/wisedev-pstach/nbomber-tutorial) if you want to skip ahead or check your work.
 
 ## Setting Up Our Projects
 
@@ -229,30 +229,35 @@ dotnet add package NBomber.Http
 Now that we have our API project set up, let's create our first NBomber test. Open the `Program.cs` file in your `ProductApi.LoadTests` project and replace its contents with the following:
 
 ```csharp
-using NBomber.Contracts;
+using NBomber.Contracts.Stats;
 using NBomber.CSharp;
 using NBomber.Http.CSharp;
 
-// 1. Create an HTTP client factory that will be used by NBomber
-var httpFactory = HttpClientFactory.Create();
+// 1. Create HTTP client
+var httpClient = new HttpClient();
 
-// 2. Define a simple scenario that will get all products
-var getAllProductsStep = Step.Create("get_all_products", httpFactory, context =>
-    Http.CreateRequest("GET", "https://localhost:7184/api/products")
-        .WithCheck(response => response.IsSuccessStatusCode
-            ? Task.FromResult<Response>(Response.Ok())
-            : Task.FromResult<Response>(Response.Fail())
-        )
+// 2. Define our test scenario using Step.Run
+var scenario = Scenario.Create("get_all_products", async context =>
+{
+    var step1 = await Step.Run("get_all_products", context, async () =>
+    {
+        var request = Http.CreateRequest("GET", "http://localhost:5062/api/products");
+        
+        var response = await Http.Send(httpClient, request);
+        
+        return !response.IsError
+            ? Response.Ok() 
+            : Response.Fail();
+    });
+
+    return Response.Ok();
+})
+.WithWarmUpDuration(TimeSpan.FromSeconds(5))
+.WithLoadSimulations(
+    Simulation.KeepConstant(copies: 10, during: TimeSpan.FromSeconds(30))
 );
 
-// 3. Define our test scenario
-var scenario = ScenarioBuilder.CreateScenario("get_all_products", getAllProductsStep)
-    .WithWarmUpDuration(TimeSpan.FromSeconds(5))
-    .WithLoadSimulations(
-        Simulation.KeepConstant(copies: 10, during: TimeSpan.FromSeconds(30))
-    );
-
-// 4. Run the test
+// 3. Run the test
 NBomberRunner
     .RegisterScenarios(scenario)
     .WithReportFormats(ReportFormat.Html, ReportFormat.Csv)
@@ -299,105 +304,139 @@ Open the HTML report in your browser to see the results. You should see somethin
 Let's expand our test to cover more endpoints. Update your `Program.cs` file in the `ProductApi.LoadTests` project:
 
 ```csharp
-using NBomber.Contracts;
+using NBomber.Contracts.Stats;
 using NBomber.CSharp;
 using NBomber.Http.CSharp;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
-// 1. Create an HTTP client factory
-var httpFactory = HttpClientFactory.Create();
+// 1. Create HTTP client
+var httpClient = new HttpClient();
 
 // Base URL for our API
-var baseUrl = "https://localhost:7184";
+var baseUrl = "http://localhost:5062";
 
-// 2. Define steps for different API operations
-
-// Get all products
-var getAllProductsStep = Step.Create("get_all_products", httpFactory, context =>
-    Http.CreateRequest("GET", $"{baseUrl}/api/products")
-        .WithCheck(response => response.IsSuccessStatusCode
-            ? Task.FromResult<Response>(Response.Ok())
-            : Task.FromResult<Response>(Response.Fail())
-        )
-);
-
-// Get product by ID
-var getProductByIdStep = Step.Create("get_product_by_id", httpFactory, context =>
-{
-    // Generate a random ID between 1 and 1000
-    var id = Random.Shared.Next(1, 1000);
-    
-    return Http.CreateRequest("GET", $"{baseUrl}/api/products/{id}")
-        .WithCheck(response => response.IsSuccessStatusCode
-            ? Task.FromResult<Response>(Response.Ok())
-            : Task.FromResult<Response>(Response.Fail())
-        );
-});
-
-// Search products
-var searchProductsStep = Step.Create("search_products", httpFactory, context =>
-{
-    // Generate a random search term
-    var searchTerms = new[] { "product", "1", "2", "3", "4", "5" };
-    var term = searchTerms[Random.Shared.Next(searchTerms.Length)];
-    
-    return Http.CreateRequest("GET", $"{baseUrl}/api/products/search?term={term}")
-        .WithCheck(response => response.IsSuccessStatusCode
-            ? Task.FromResult<Response>(Response.Ok())
-            : Task.FromResult<Response>(Response.Fail())
-        );
-});
-
-// Create a product
-var createProductStep = Step.Create("create_product", httpFactory, context =>
-{
-    // Create a random product
-    var product = new
-    {
-        Name = $"Test Product {Guid.NewGuid()}",
-        Price = Random.Shared.Next(10, 100),
-        Description = "A test product created during load testing",
-        StockQuantity = Random.Shared.Next(1, 100)
-    };
-    
-    var json = JsonSerializer.Serialize(product);
-    var content = new StringContent(json, Encoding.UTF8, "application/json");
-    
-    return Http.CreateRequest("POST", $"{baseUrl}/api/products")
-        .WithBody(content)
-        .WithCheck(response => response.IsSuccessStatusCode
-            ? Task.FromResult<Response>(Response.Ok())
-            : Task.FromResult<Response>(Response.Fail())
-        );
-});
-
-// 3. Define scenarios for different test cases
+// 2. Define scenarios for different API operations
 
 // Scenario 1: Test the GET all products endpoint
-var getAllProductsScenario = ScenarioBuilder.CreateScenario("get_all_products_scenario", getAllProductsStep)
-    .WithWarmUpDuration(TimeSpan.FromSeconds(5))
-    .WithLoadSimulations(
-        Simulation.KeepConstant(copies: 50, during: TimeSpan.FromSeconds(30))
-    );
+var getAllProductsScenario = Scenario.Create("get_all_products_scenario", async context =>
+{
+    var step1 = await Step.Run("get_all_products", context, async () =>
+    {
+        var request = Http.CreateRequest("GET", $"{baseUrl}/api/products");
+        var response = await Http.Send(httpClient, request);
+        
+        return !response.IsError 
+            ? Response.Ok() 
+            : Response.Fail();
+    });
+
+    return Response.Ok();
+})
+.WithWarmUpDuration(TimeSpan.FromSeconds(5))
+.WithLoadSimulations(
+    Simulation.KeepConstant(copies: 50, during: TimeSpan.FromSeconds(30))
+);
 
 // Scenario 2: Test the search endpoint (which has our deliberate inefficiency)
-var searchProductsScenario = ScenarioBuilder.CreateScenario("search_products_scenario", searchProductsStep)
-    .WithWarmUpDuration(TimeSpan.FromSeconds(5))
-    .WithLoadSimulations(
-        Simulation.KeepConstant(copies: 50, during: TimeSpan.FromSeconds(30))
-    );
+var searchProductsScenario = Scenario.Create("search_products_scenario", async context =>
+{
+    var step1 = await Step.Run("search_products", context, async () =>
+    {
+        // Generate a random search term
+        var searchTerms = new[] { "product", "1", "2", "3", "4", "5" };
+        var term = searchTerms[Random.Shared.Next(searchTerms.Length)];
+        
+        var request = Http.CreateRequest("GET", $"{baseUrl}/api/products/search?term={term}");
+        var response = await Http.Send(httpClient, request);
+        
+        return !response.IsError 
+            ? Response.Ok() 
+            : Response.Fail();
+    });
+
+    return Response.Ok();
+})
+.WithWarmUpDuration(TimeSpan.FromSeconds(5))
+.WithLoadSimulations(
+    Simulation.KeepConstant(copies: 50, during: TimeSpan.FromSeconds(30))
+);
 
 // Scenario 3: Mixed usage scenario
-var mixedScenario = ScenarioBuilder.CreateScenario("mixed_usage_scenario", 
-        getAllProductsStep, getProductByIdStep, searchProductsStep, createProductStep)
-    .WithWarmUpDuration(TimeSpan.FromSeconds(5))
-    .WithLoadSimulations(
-        Simulation.KeepConstant(copies: 20, during: TimeSpan.FromSeconds(60))
-    );
+var mixedScenario = Scenario.Create("mixed_usage_scenario", async context =>
+{
+    // Get all products step
+    var step1 = await Step.Run("get_all_products", context, async () =>
+    {
+        var request = Http.CreateRequest("GET", $"{baseUrl}/api/products");
+        var response = await Http.Send(httpClient, request);
+        
+        return !response.IsError 
+            ? Response.Ok() 
+            : Response.Fail();
+    });
 
-// 4. Run the tests
+    // Get product by ID step
+    var step2 = await Step.Run("get_product_by_id", context, async () =>
+    {
+        // Generate a random ID between 1 and 1000
+        var id = Random.Shared.Next(1, 1000);
+        
+        var request = Http.CreateRequest("GET", $"{baseUrl}/api/products/{id}");
+        var response = await Http.Send(httpClient, request);
+        
+        return !response.IsError 
+            ? Response.Ok() 
+            : Response.Fail();
+    });
+
+    // Search products step
+    var step3 = await Step.Run("search_products", context, async () =>
+    {
+        // Generate a random search term
+        var searchTerms = new[] { "product", "1", "2", "3", "4", "5" };
+        var term = searchTerms[Random.Shared.Next(searchTerms.Length)];
+        
+        var request = Http.CreateRequest("GET", $"{baseUrl}/api/products/search?term={term}");
+        var response = await Http.Send(httpClient, request);
+        
+        return !response.IsError 
+            ? Response.Ok() 
+            : Response.Fail();
+    });
+
+    // Create a product step
+    var step4 = await Step.Run("create_product", context, async () =>
+    {
+        // Create a random product
+        var product = new
+        {
+            Name = $"Test Product {Guid.NewGuid()}",
+            Price = Random.Shared.Next(10, 100),
+            Description = "A test product created during load testing",
+            StockQuantity = Random.Shared.Next(1, 100)
+        };
+        
+        var json = JsonSerializer.Serialize(product);
+        var request = Http.CreateRequest("POST", $"{baseUrl}/api/products")
+            .WithHeader("Content-Type", "application/json")
+            .WithBody(new StringContent(json, Encoding.UTF8, "application/json"));
+        
+        var response = await Http.Send(httpClient, request);
+        
+        return !response.IsError 
+            ? Response.Ok() 
+            : Response.Fail();
+    });
+
+    return Response.Ok();
+})
+.WithWarmUpDuration(TimeSpan.FromSeconds(5))
+.WithLoadSimulations(
+    Simulation.KeepConstant(copies: 20, during: TimeSpan.FromSeconds(60))
+);
+
+// 3. Run the tests
 NBomberRunner
     .RegisterScenarios(getAllProductsScenario, searchProductsScenario, mixedScenario)
     .WithReportFormats(ReportFormat.Html, ReportFormat.Csv)
@@ -501,74 +540,7 @@ var mixedScenario = ScenarioBuilder.CreateScenario("mixed_usage_scenario",
     );
 ```
 
-### 2. Data Sharing Between Steps
-
-In real-world scenarios, steps often need to share data. For example, you might need to create a product and then retrieve it by ID. NBomber provides a context object that you can use to share data between steps:
-
-```csharp
-// Create a product and store its ID in the context
-var createProductStep = Step.Create("create_product", httpFactory, async context =>
-{
-    // Create a random product
-    var product = new
-    {
-        Name = $"Test Product {Guid.NewGuid()}",
-        Price = Random.Shared.Next(10, 100),
-        Description = "A test product created during load testing",
-        StockQuantity = Random.Shared.Next(1, 100)
-    };
-    
-    var json = JsonSerializer.Serialize(product);
-    var content = new StringContent(json, Encoding.UTF8, "application/json");
-    
-    var response = await Http.CreateRequest("POST", $"{baseUrl}/api/products")
-        .WithBody(content)
-        .SendAsync(context);
-
-    if (response.IsSuccessStatusCode)
-    {
-        // Parse the response to get the new product ID
-        var responseContent = await response.Content.ReadAsStringAsync();
-        var createdProduct = JsonSerializer.Deserialize<Product>(responseContent, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        });
-        
-        // Store the ID in the context for the next step
-        context.Data["productId"] = createdProduct.Id;
-        return Response.Ok();
-    }
-    
-    return Response.Fail();
-});
-
-// Get the product we just created
-var getCreatedProductStep = Step.Create("get_created_product", httpFactory, async context =>
-{
-    // Get the product ID from the context
-    if (!context.Data.TryGetValue("productId", out var productIdObj) || productIdObj is not int productId)
-    {
-        return Response.Fail("Product ID not found in context");
-    }
-    
-    var response = await Http.CreateRequest("GET", $"{baseUrl}/api/products/{productId}")
-        .SendAsync(context);
-        
-    return response.IsSuccessStatusCode
-        ? Response.Ok()
-        : Response.Fail();
-});
-
-// Create a scenario that creates a product and then retrieves it
-var createAndGetScenario = ScenarioBuilder.CreateScenario("create_and_get_scenario", 
-        createProductStep, getCreatedProductStep)
-    .WithWarmUpDuration(TimeSpan.FromSeconds(5))
-    .WithLoadSimulations(
-        Simulation.KeepConstant(copies: 20, during: TimeSpan.FromSeconds(30))
-    );
-```
-
-### 3. Custom Metrics and Assertions
+### 2. Custom Metrics and Assertions
 
 NBomber allows you to define custom metrics and assertions to validate your test results:
 
