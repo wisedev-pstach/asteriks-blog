@@ -1,0 +1,5 @@
+/* Favicon CSS - This allows us to use the SVG as a favicon */
+:root {
+  --favicon-bg: #1a1a2e;
+  --favicon-color: #64ffda;
+}
