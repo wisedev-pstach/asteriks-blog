@@ -1119,21 +1119,46 @@ footer {
 /* Responsive Design */
 @media (max-width: 992px) {
     .hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 150px 20px 50px;
+        padding: 150px 50px 100px;
     }
 
     .hero-content {
-        margin-bottom: 50px;
+        max-width: 60%;
     }
 
-    .cta-buttons {
-        justify-content: center;
+    .hero-code {
+        max-width: 40%;
     }
 
-    .title {
-        font-size: 3rem;
+    .code-block {
+        font-size: 0.9rem;
+    }
+    
+    /* Make featured articles responsive on tablet */
+    .articles-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .article-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .article-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .article-excerpt {
+        flex: 1;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
     }
 }
 
@@ -1153,6 +1178,21 @@ footer {
     .hero-content {
         max-width: 100%;
     }
+    
+    /* Make featured articles responsive */
+    .articles-container {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 25px;
+    }
+    
+    .article-card {
+        max-width: 100%;
+    }
+    
+    .article-image {
+        height: 180px;
+    }
+    
     .nav-links {
         position: fixed;
         top: 80px;
