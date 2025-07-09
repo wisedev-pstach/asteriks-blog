@@ -178,7 +178,7 @@ function updateFeaturedArticles() {
             </div>
             <div class="article-content">
                 <div class="article-tags">
-                    ${article.tags.map(tag => `<span class="article-tag">${tag}</span>`).join('')}
+                    ${article.tags ? article.tags.map(tag => `<span class="article-tag">${tag}</span>`).join('') : ''}
                 </div>
                 <h3 class="article-title">${article.title}</h3>
                 <p class="article-excerpt">${article.excerpt}</p>
