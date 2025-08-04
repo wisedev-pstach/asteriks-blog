@@ -56,18 +56,40 @@
       "name": "Programming",
       "tag": "programming",
       "description": "General programming concepts, languages, and techniques"
+    },
+    {
+      "name": "API Documentation",
+      "tag": "documentation",
+      "description": "API documentation tools, techniques, and best practices"
+    },
+    {
+      "name": ".NET Development",
+      "tag": "dotnet",
+      "description": ".NET framework, tools, and development practices"
     }
   ],
   "articles": [
     {
+      "id": "swagger-alt",
+      "filename": "swagger-alt.md",
+      "title": "Swagger Alternatives in .NET 9",
+      "author": "WiseDev",
+      "date": "August 4, 2025",
+      "excerpt": "Discovering that Swagger UI is no longer included by default in .NET 9 is like showing up to a party and finding out the DJ went home. The music stopped, but the party doesn't have to end.",
+      "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "tags": ["dotnet", "api", "documentation", "webapi", "tools"],
+      "featured": true,
+      "description": "Explore modern alternatives to Swagger UI in .NET 9, including Scalar, RapiDoc, and classic Swagger UI. Learn how to set up each tool with practical examples."
+    },
+    {
       "id": "nbomber-api-testing",
       "filename": "nbomber-api-testing.md",
       "title": "NBomber Tutorial: Complete Guide to API Load Testing in C#",
-      "author": "Asterisk Dev",
+      "author": "WiseDev",
       "date": "May 31, 2025",
       "excerpt": "Finding out your API collapses under load in production is like discovering your parachute has a hole... while skydiving. NBomber helps you discover these issues while you're still on the ground.",
       "image": "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      "tags": ["programming", "csharp", "performance", "nbomber", "tutorial", "load-testing", "api-testing"],
+      "tags": ["programming", "csharp", "performance", "tutorial", "load-testing", "api-testing"],
       "featured": true,
       "description": "A complete step-by-step NBomber tutorial for load testing APIs in C#. Learn how to set up NBomber from scratch and test your API performance with real code examples."
     },

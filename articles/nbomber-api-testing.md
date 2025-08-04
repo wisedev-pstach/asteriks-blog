@@ -2,7 +2,7 @@
 
 # NBomber Tutorial: Complete Guide to API Load Testing in C#
 
-**Author:** Asterisk Dev  
+**Author:** WiseDev  
 **Date:** May 31, 2025  
 **Tags:** programming, csharp, performance, nbomber, tutorial, load-testing, api-testing  
 
